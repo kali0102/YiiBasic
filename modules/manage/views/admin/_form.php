@@ -11,7 +11,7 @@ use app\components\Constant;
 
 <div class="admin-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
 
@@ -23,7 +23,7 @@ use app\components\Constant;
 
     <?= $form->field($model, 'realname')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'avatar')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'avatar')->fileInput() ?>
 
     <?= $form->field($model, 'sex')->dropDownList(Constant::getSexList()) ?>
 

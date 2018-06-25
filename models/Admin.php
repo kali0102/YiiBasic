@@ -41,11 +41,12 @@ class Admin extends ActiveRecord
     public function rules()
     {
         return [
-            [['username', 'password', 'created_at', 'updated_at'], 'required'],
+            [['username', 'password', 'email'], 'required'],
             [['sex', 'state', 'last_login_time', 'last_login_ip', 'created_at', 'updated_at'], 'integer'],
             [['username', 'phone', 'realname'], 'string', 'max' => 32],
             [['password', 'avatar'], 'string', 'max' => 128],
             [['email'], 'string', 'max' => 64],
+            [['email'], 'email', 'message' => 'Email格式错误！']
         ];
     }
 

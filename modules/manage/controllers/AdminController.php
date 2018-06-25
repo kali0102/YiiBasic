@@ -54,15 +54,26 @@ class AdminController extends Controller
 
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $model = $this->loadModel($id);
+        if ($model->load(Yii::$app->request->post()) && $model->save())
             return $this->redirect(['view', 'id' => $model->id]);
-        }
+        return $this->render('update', ['model' => $model]);
+    }
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+    public function actionDisable($id)
+    {
+        $model = $this->loadModel($id);
+        $model->state = Constant::STATE_DISABLED;
+        $model->save();
+        return $this->redirect(['index']);
+    }
+
+    public function actionEnable($id)
+    {
+        $model = $this->loadModel($id);
+        $model->state = Constant::STATE_NORMAL;
+        $model->save();
+        return $this->redirect(['index']);
     }
 
     public function actionDelete($id)
@@ -72,12 +83,14 @@ class AdminController extends Controller
         return $this->redirect(['index']);
     }
 
-    protected function findModel($id)
+    public function loadModel($id, $columns = ['*'], $condition = [])
     {
-        if (($model = Admin::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $model = Admin::find();
+        $model->select($columns);
+        $model->where(['id' => $id]);
+        $condition ? $model->andWhere($condition) : '';
+        if (!$activeRecord = $model->one())
+            throw new NotFoundHttpException;
+        return $activeRecord;
     }
 }

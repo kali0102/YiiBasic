@@ -25,8 +25,20 @@ $configs['components']['cache'] = ['class' => 'yii\caching\FileCache'];
 
 // 用户
 $configs['components']['user'] = [
-    'identityClass' => 'app\models\User',
+    'identityClass' => 'app\models\Member',
     'enableAutoLogin' => true,
+    'loginUrl' => ['/signin'],
+    'identityCookie' => ['name' => '__user_identity'],
+    'idParam' => '__user'
+];
+// 管理
+$configs['components']['admin'] = [
+    'class' => 'yii\web\User',
+    'identityClass' => 'app\models\Admin',
+    'enableAutoLogin' => true,
+    'loginUrl' => ['/manage/signin'],
+    'identityCookie' => ['name' => '__admin_identity'],
+    'idParam' => '__admin',
 ];
 
 // 错误

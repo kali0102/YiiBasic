@@ -2,23 +2,26 @@
 
 namespace app\modules\manage;
 
-/**
- * manage module definition class
- */
 class Module extends \yii\base\Module
 {
-    /**
-     * {@inheritdoc}
-     */
     public $controllerNamespace = 'app\modules\manage\controllers';
 
-    /**
-     * {@inheritdoc}
-     */
     public function init()
     {
         parent::init();
+    }
 
-        // custom initialization code goes here
+    public function beforeAction($action)
+    {
+        if (parent::beforeAction($action)) {
+            $rote = $action->controller->id . '/' . $action->id;
+            $allowPages = ['signin/index', 'signin/captcha', 'error/index'];
+            if (in_array($rote, $allowPages))
+                return true;
+            if (Yii::$app->admin->isGuest)
+                Yii::$app->admin->loginRequired();
+            return true;
+        } else
+            return false;
     }
 }
