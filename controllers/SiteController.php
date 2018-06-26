@@ -53,6 +53,13 @@ class SiteController extends Controller
     {
 //        Yii::$app->cache->set('name', 'kali.liu');
 
+        echo md5(123456) . "<br/>";
+        echo 'e10adc3949ba59abbe56e057f20f883e';
+
+        echo "<br/>";
+        echo md5('e10adc3949ba59abbe56e057f20f883e');
+
+        die;
         echo Yii::$app->cache->get('name');
         return $this->render('index');
     }

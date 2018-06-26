@@ -3,6 +3,10 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
+use app\components\Constant;
+use yii\web\IdentityInterface;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "{{%user}}".
@@ -16,38 +20,34 @@ use Yii;
  * @property string $avatar 头像
  * @property int $sex 性别（1：男、2：女、0：保密）
  * @property int $state 状态（0：禁用、1：正常）
+ * @property int $logins 登录次数
  * @property string $last_login_time 最近登录时间
  * @property string $last_login_ip 最近登录IP
  * @property string $created_at 创建时间
  * @property string $updated_at 更新时间
  */
-class User extends \yii\db\ActiveRecord
+class User extends ActiveRecord implements IdentityInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return '{{%user}}';
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    public function behaviors()
+    {
+        return [TimestampBehavior::class];
+    }
+
     public function rules()
     {
         return [
             [['sex', 'state', 'last_login_time', 'last_login_ip', 'created_at', 'updated_at'], 'integer'],
-            [['created_at', 'updated_at'], 'required'],
             [['username', 'phone', 'nickname'], 'string', 'max' => 32],
             [['password', 'avatar'], 'string', 'max' => 128],
             [['email'], 'string', 'max' => 64],
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [
@@ -67,10 +67,59 @@ class User extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     * @return UserQuery the active query used by this AR class.
-     */
+    public function setPassword($password)
+    {
+        $this->password = md5($password);
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getAuthKey()
+    {
+        return null;
+    }
+
+    public function validateAuthKey($authKey)
+    {
+        return true;
+    }
+
+    public function validatePassword($password)
+    {
+        return $this->password === md5($password);
+    }
+
+    public static function findByUsername($username)
+    {
+        $model = self::find();
+        $model->select(['username', 'password', 'id']);
+        $model->where(['username' => $username, 'state' => Constant::STATE_NORMAL]);
+        if ($user = $model->one())
+            return new Static($user);
+        return null;
+    }
+
+    public static function findIdentity($id)
+    {
+        if ($user = Yii::$app->cache->get('__user_' . $id))
+            return unserialize($user);
+
+        $model = static::find();
+        $model->select(['username', 'password', 'id']);
+        $model->where(['id' => $id]);
+        $user = $model->one();
+        \Yii::$app->cache->set('__user_' . $id, serialize($user));
+        return $user;
+    }
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        return null;
+    }
+
     public static function find()
     {
         return new UserQuery(get_called_class());

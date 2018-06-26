@@ -25,7 +25,7 @@ $configs['components']['cache'] = ['class' => 'yii\caching\FileCache'];
 
 // 用户
 $configs['components']['user'] = [
-    'identityClass' => 'app\models\Member',
+    'identityClass' => 'app\models\User',
     'enableAutoLogin' => true,
     'loginUrl' => ['/signin'],
     'identityCookie' => ['name' => '__user_identity'],

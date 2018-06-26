@@ -6,9 +6,9 @@ use Yii;
 use yii\base\Model;
 
 /**
- *  用户登录
+ * 管理登录
  */
-class LoginForm extends Model
+class SigninForm extends Model
 {
     public $username;
     public $password;
@@ -24,7 +24,7 @@ class LoginForm extends Model
             [['username', 'password'], 'required', 'message' => '请输入{attribute}！'],
             // 需输入验证码
             [['username', 'password', 'captcha'], 'required', 'on' => ['captchaRequired'], 'message' => '请输入{attribute}！'],
-            ['captcha', 'captcha', 'captchaAction' => '/signin/captcha', 'on' => ['captchaRequired']],
+            ['captcha', 'captcha', 'captchaAction' => 'manage/signin/captcha', 'on' => ['captchaRequired']],
             // 通用规则
             ['rememberMe', 'boolean'],
             ['password', 'validatePassword'],
@@ -53,7 +53,7 @@ class LoginForm extends Model
     {
         if ($this->validate()) {
             $user = $this->getUser();
-            if (Yii::$app->user->login($user, $this->rememberMe ? 3600 * 24 * 30 : 60))
+            if (Yii::$app->admin->login($user, $this->rememberMe ? 3600 * 24 * 30 : 60))
                 return true;
         } else {
             $counter = Yii::$app->session->get('captchaRequired', 0) + 1;
@@ -65,7 +65,7 @@ class LoginForm extends Model
     public function getUser()
     {
         if ($this->_user === false)
-            $this->_user = User::findByUsername($this->username);
+            $this->_user = Admin::findByUsername($this->username);
         return $this->_user;
     }
 }
