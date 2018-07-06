@@ -1,0 +1,56 @@
+[ 2018-07-06 09:59:13 ]local.INFO:2 disconnected
+[ 2018-07-06 09:59:13 ]local.INFO:Task3Finished
+
+[ 2018-07-06 09:59:13 ]local.INFO:array (
+  'remote_addr' => '127.0.0.1',
+  'request_time' => '2018-07-06 09:59:12',
+)
+[ 2018-07-06 09:59:13 ]local.INFO:Task4Finished
+
+[ 2018-07-06 09:59:54 ]local.INFO:Task5Finished
+
+[ 2018-07-06 10:00:32 ]local.INFO:array (
+  'remote_addr' => '127.0.0.1',
+  'request_time' => '2018-07-06 10:00:31',
+)
+[ 2018-07-06 10:00:32 ]local.INFO:Task0Finished
+
+[ 2018-07-06 10:00:34 ]local.INFO:1 disconnected
+[ 2018-07-06 10:00:34 ]local.INFO:Task1Finished
+
+[ 2018-07-06 10:00:34 ]local.INFO:array (
+  'remote_addr' => '127.0.0.1',
+  'request_time' => '2018-07-06 10:00:33',
+)
+[ 2018-07-06 10:00:34 ]local.INFO:Task2Finished
+
+[ 2018-07-06 10:01:06 ]local.INFO:array (
+  'remote_addr' => '127.0.0.1',
+  'request_time' => '2018-07-06 10:01:05',
+)
+[ 2018-07-06 10:01:06 ]local.INFO:Task0Finished
+
+[ 2018-07-06 10:01:23 ]local.INFO:Task1Finished
+
+[ 2018-07-06 10:02:07 ]local.INFO:array (
+  'remote_addr' => '127.0.0.1',
+  'request_time' => '2018-07-06 10:02:07',
+)
+[ 2018-07-06 10:02:07 ]local.INFO:Task0Finished
+
+[ 2018-07-06 10:02:16 ]local.INFO:Task1Finished
+
+[ 2018-07-06 10:02:24 ]local.INFO:array (
+  'remote_addr' => '127.0.0.1',
+  'request_time' => '2018-07-06 10:02:23',
+)
+[ 2018-07-06 10:02:28 ]local.INFO:Task2Finished
+
+[ 2018-07-06 10:02:34 ]local.INFO:Task3Finished
+
+[ 2018-07-06 10:04:14 ]local.INFO:array (
+  'remote_addr' => '127.0.0.1',
+  'request_time' => '2018-07-06 10:04:14',
+)
+[ 2018-07-06 10:04:14 ]local.INFO:Task0Finished
+
