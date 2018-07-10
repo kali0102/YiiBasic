@@ -75,15 +75,15 @@ class WebSocketServer
                 return false;
         }
 
-        echo count($this->users) . ' -- ' . PHP_EOL;
-
         $this->server->task($response);
     }
 
     public function onTask($server, $task_id, $from_id, $message)
     {
 
-        print_r($message);
+        print_r(count($this->server->connections));
+        foreach ($this->server->connections as $fd)
+            echo $fd;
 
 //        echo count($this->users);
 //        foreach ($this->users as $fd => $name)
