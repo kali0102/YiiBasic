@@ -20,14 +20,17 @@ class SigninForm extends Model
     public function rules()
     {
         return [
-            // 不需要输入验证码
-            [['username', 'password'], 'required', 'message' => '请输入{attribute}！'],
-            // 需输入验证码
-            [['username', 'password', 'captcha'], 'required', 'on' => ['captchaRequired'], 'message' => '请输入{attribute}！'],
+            ['username', 'trim'],
+            ['username', 'required'],
+
+            ['password', 'trim'],
+            ['password', 'required'],
+
+            ['captcha', 'required', 'on' => ['captchaRequired']],
             ['captcha', 'captcha', 'captchaAction' => 'manage/signin/captcha', 'on' => ['captchaRequired']],
-            // 通用规则
-            ['rememberMe', 'boolean'],
+
             ['password', 'validatePassword'],
+            ['rememberMe', 'boolean'],
         ];
     }
 
@@ -36,7 +39,8 @@ class SigninForm extends Model
         return [
             'username' => '用户名',
             'password' => '密码',
-            'captcha' => '验证码'
+            'captcha' => '验证码',
+            'rememberMe' => '记住我'
         ];
     }
 

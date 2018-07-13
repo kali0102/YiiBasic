@@ -23,6 +23,9 @@ $configs['components']['request'] = ['cookieValidationKey' => '4Wj5W9yaTpkDsN99f
 // 缓存
 $configs['components']['cache'] = ['class' => 'yii\caching\FileCache'];
 
+// 短信
+$configs['components']['sms'] = ['class' => 'app\components\Sms'];
+
 // 用户
 $configs['components']['user'] = [
     'identityClass' => 'app\models\User',

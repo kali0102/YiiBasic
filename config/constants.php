@@ -1,7 +1,7 @@
 <?php
 
 // true | false
-define('YII_DEBUG', true);
+define('YII_DEBUG', false);
 
 // prod | dev
-define('YII_ENV', 'dev');
+define('YII_ENV', 'prod');
