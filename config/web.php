@@ -1,5 +1,7 @@
 <?php
 
+$params = require __DIR__ . '/params.php';
+
 $configs['id'] = 'YiiBasic';
 $configs['language'] = 'zh-cn';
 $configs['basePath'] = dirname(__DIR__);
@@ -10,9 +12,9 @@ $configs['aliases']['@bower'] = '@vendor/bower-asset';
 $configs['aliases']['@npm'] = '@vendor/npm-asset';
 
 // 模块
-$configs['modules']['manage'] = ['class' => 'app\modules\manage\Module'];
-$configs['modules']['user'] = ['class' => 'app\modules\user\Module'];
-$configs['modules']['wap'] = ['class' => 'app\modules\wap\Module'];
+$configs['modules'][$params['modules']['manage']] = ['class' => 'app\modules\manage\Module'];
+$configs['modules'][$params['modules']['user']] = ['class' => 'app\modules\user\Module'];
+$configs['modules'][$params['modules']['wap']] = ['class' => 'app\modules\wap\Module'];
 
 // 资源
 $configs['components']['assetManager']['bundles'] = require __DIR__ . '/assets.php';
@@ -32,7 +34,14 @@ $configs['components']['user'] = [
     'enableAutoLogin' => true,
     'loginUrl' => ['/signin'],
     'identityCookie' => ['name' => '__user_identity'],
-    'idParam' => '__user'
+    'idParam' => '__user',
+    'on afterLogin' => function ($event) {
+        $user = $event->identity;
+        $user->logins = $user->logins + 1;
+        $user->last_login_at = $_SERVER['REQUEST_TIME'];
+        $user->last_login_ip = ip2long(Yii::$app->request->userIP);
+        $user->save();
+    }
 ];
 // 管理
 $configs['components']['admin'] = [
@@ -42,6 +51,13 @@ $configs['components']['admin'] = [
     'loginUrl' => ['/manage/signin'],
     'identityCookie' => ['name' => '__admin_identity'],
     'idParam' => '__admin',
+    'on afterLogin' => function ($event) {
+        $user = $event->identity;
+        $user->logins = $user->logins + 1;
+        $user->last_login_at = $_SERVER['REQUEST_TIME'];
+        $user->last_login_ip = ip2long(Yii::$app->request->userIP);
+        $user->save();
+    }
 ];
 
 // 错误
@@ -70,7 +86,7 @@ $configs['components']['db'] = require __DIR__ . '/db.php';
 $configs['components']['urlManager'] = require __DIR__ . '/url.php';
 
 // 参数
-$configs['params'] = require __DIR__ . '/params.php';
+$configs['params'] = $params;
 
 if (YII_ENV_DEV) {
     $configs['bootstrap'][] = 'debug';

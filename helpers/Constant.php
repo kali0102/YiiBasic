@@ -9,12 +9,16 @@ namespace app\helpers;
 class Constant
 {
 
-    // 性别
+    /**
+     * 性别
+     */
     const SEX_SECRECY = 0;
     const SEX_MALE = 1;
     const SEX_FEMALE = 2;
 
-    // 状态
+    /**
+     * 状态
+     */
     const STATE_DISABLED = 0;
     const STATE_NORMAL = 1;
 
@@ -22,31 +26,32 @@ class Constant
      * 性别列表
      * @return array
      */
-    static function sexMap()
+    static function sexTextMap()
     {
         return [
-            self::SEX_SECRECY => '保密',
             self::SEX_MALE => '男',
             self::SEX_FEMALE => '女',
+            self::SEX_SECRECY => '保密'
         ];
     }
+
 
     /**
      * 显示性别
      * @param $i
-     * @return mixed|string
+     * @return string
      */
-    static function showSex($i)
+    static function getSexText($i)
     {
-        $sexList = self::getSexList();
-        return isset($sexList[$i]) ? $sexList[$i] : '-';
+        $sexMap = self::sexTextMap();
+        return isset($sexMap[$i]) ? $sexMap[$i] : '-';
     }
 
     /**
      * 状态列表
      * @return array
      */
-    static function getStateList()
+    static function stateTextMap()
     {
         return [
             self::STATE_NORMAL => '正常',
@@ -57,11 +62,11 @@ class Constant
     /**
      * 显示状态
      * @param $i
-     * @return mixed|string
+     * @return string
      */
-    static function showState($i)
+    static function getStateText($i)
     {
-        $stateList = self::getStateList();
-        return isset($stateList[$i]) ? $stateList[$i] : '-';
+        $stateMap = self::stateTextMap();
+        return isset($stateMap[$i]) ? $stateMap[$i] : '-';
     }
 }

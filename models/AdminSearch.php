@@ -18,8 +18,8 @@ class AdminSearch extends Admin
     public function rules()
     {
         return [
-            [['id', 'sex', 'state', 'last_login_time', 'last_login_ip', 'created_at', 'updated_at'], 'integer'],
-            [['username', 'password', 'email', 'phone', 'realname', 'avatar'], 'safe'],
+            [['id', 'sex', 'state', 'last_login_at', 'last_login_ip', 'created_at', 'updated_at'], 'integer'],
+            [['username', 'password', 'email', 'phone_number', 'realname', 'avatar'], 'safe'],
         ];
     }
 
@@ -62,7 +62,7 @@ class AdminSearch extends Admin
             'id' => $this->id,
             'sex' => $this->sex,
             'state' => $this->state,
-            'last_login_time' => $this->last_login_time,
+            'last_login_at' => $this->last_login_at,
             'last_login_ip' => $this->last_login_ip,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
@@ -71,7 +71,7 @@ class AdminSearch extends Admin
         $query->andFilterWhere(['like', 'username', $this->username])
             ->andFilterWhere(['like', 'password', $this->password])
             ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'phone', $this->phone])
+            ->andFilterWhere(['like', 'phone_number', $this->phone_number])
             ->andFilterWhere(['like', 'realname', $this->realname])
             ->andFilterWhere(['like', 'avatar', $this->avatar]);
 
