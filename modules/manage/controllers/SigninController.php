@@ -6,6 +6,9 @@ use Yii;
 use yii\web\Controller;
 use app\models\SigninForm;
 
+/**
+ * 登录
+ */
 class SigninController extends Controller
 {
 
@@ -24,21 +27,19 @@ class SigninController extends Controller
         ];
     }
 
-
     public function actionIndex()
     {
+        $params = Yii::$app->params;
         if (!Yii::$app->admin->isGuest)
-            return $this->redirect(['/manage']);
+            return $this->redirect(["/{$params['modules']['manage']}"]);
 
         if ($this->_captchaRequired()) {
             $model = new SigninForm;
             $model->scenario = 'captchaRequired';
         } else
             $model = new SigninForm;
-
-        $request = Yii::$app->request;
-        if ($model->load($request->post()) && $model->login())
-            return $this->redirect(['/manage']);
+        if ($model->load(Yii::$app->request->post()) && $model->login())
+            return $this->redirect(["/{$params['modules']['manage']}"]);
 
         return $this->render('index', ['model' => $model]);
     }
@@ -49,6 +50,7 @@ class SigninController extends Controller
      */
     private function _captchaRequired()
     {
-        return Yii::$app->session->get('captchaRequired', 0) >= $this->attempts;
+        $session = Yii::$app->session;
+        return $session->get('captchaRequired', 0) >= $this->attempts;
     }
 }

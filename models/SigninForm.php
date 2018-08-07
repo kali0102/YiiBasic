@@ -27,7 +27,7 @@ class SigninForm extends Model
             ['password', 'required'],
 
             ['captcha', 'required', 'on' => ['captchaRequired']],
-            ['captcha', 'captcha', 'captchaAction' => 'manage/signin/captcha', 'on' => ['captchaRequired']],
+            ['captcha', 'captcha', 'captchaAction' => Yii::$app->params['modules']['manage'] . '/signin/captcha', 'on' => ['captchaRequired']],
 
             ['password', 'validatePassword'],
             ['rememberMe', 'boolean'],

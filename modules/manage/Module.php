@@ -2,28 +2,26 @@
 
 namespace app\modules\manage;
 
-use Yii;
-
+/**
+ * 管理模块
+ * @author xxx <xxx@xx.com>
+ * @link http://www.xxx.com
+ * @copyright Copyright &copy; 2012-2014 xxx Inc
+ */
 class Module extends \yii\base\Module
 {
     public $controllerNamespace = 'app\modules\manage\controllers';
 
-    public function init()
-    {
-        parent::init();
-    }
-
     public function beforeAction($action)
     {
-        if (parent::beforeAction($action)) {
-            $rote = $action->controller->id . '/' . $action->id;
-            $allowPages = ['signin/index', 'signin/captcha', 'error/index'];
-            if (in_array($rote, $allowPages))
-                return true;
-            if (Yii::$app->admin->isGuest)
-                Yii::$app->admin->loginRequired();
-            return true;
-        } else
+        if (!parent::beforeAction($action))
             return false;
+
+        $currController = $action->controller->id;
+        if (in_array($currController, ['signin', 'signout', 'error']))
+            return true;
+
+        \Yii::$app->admin->isGuest ? \Yii::$app->admin->loginRequired() : '';
+        return true;
     }
 }

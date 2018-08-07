@@ -11,6 +11,8 @@ use yii\bootstrap\ActiveForm;
 
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
+
+$params = Yii::$app->params;
 ?>
 <div class="site-login">
 
@@ -29,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php if ($model->scenario == 'captchaRequired'): ?>
         <?= $form->field($model, 'captcha')->widget(Captcha::className(), [
-            'captchaAction' => '/manage/signin/captcha',
+            'captchaAction' => "/{$params['modules']['manage']}/signin/captcha",
             'template' => '<div class="row"><div class="col-lg-5">{input}</div><div class="col-lg-6">{image}</div></div>',
             'imageOptions' => ['alt' => '点击换图', 'title' => '点击换图', 'style' => 'cursor: pointer;']
         ])->label(false); ?>

@@ -48,7 +48,7 @@ $configs['components']['admin'] = [
     'class' => 'yii\web\User',
     'identityClass' => 'app\models\Admin',
     'enableAutoLogin' => true,
-    'loginUrl' => ['/manage/signin'],
+    'loginUrl' => ["/{$params['modules']['manage']}/signin"],
     'identityCookie' => ['name' => '__admin_identity'],
     'idParam' => '__admin',
     'on afterLogin' => function ($event) {
